@@ -1,0 +1,57 @@
+﻿<!--So I can use models-->
+@using FinalProject_ABBOTT.Models;
+@*
+    This page is used for adding or modifying the divisions
+*@
+<!--For Division data-->
+@model Division;
+@{
+    string title = ViewBag.Action + " division";
+    ViewData["Title"] = title;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="save" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="row mb-3">
+        <label asp-for="Name" class="form-label">Division Name</label>
+        <div class="col">
+            <input asp-for="Name" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="TotalContestantSlots" class="form-label">Total Possible Contestants</label>
+        <div class="col">
+            <input asp-for="TotalContestantSlots" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="EventTime" class="form-label">Time of Event</label>
+        <div class="col">
+            <input asp-for="EventTime" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="CoordinatorName" class="form-label">Coordinator Name</label>
+        <div class="col">
+            <input asp-for="CoordinatorName" class="form-control" />
+        </div>
+    </div>
+
+    <!--Hiddent inputs the user does not need to worry about-->
+    <input type="hidden" asp-for="DivisionID" />
+    <input type="hidden" asp-for="FilledContestantSlots" />
+    
+    <!--Buttons-->
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="DivisionList" class="btn btn-primary">Cancel</a>
+</form>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

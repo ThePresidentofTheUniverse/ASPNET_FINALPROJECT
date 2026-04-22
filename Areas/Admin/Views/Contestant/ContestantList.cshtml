@@ -1,0 +1,71 @@
+﻿<!--So I can use models-->
+@using FinalProject_ABBOTT.Models;
+@*
+    The page for managing all of the contestants.
+*@
+<!--for contestant data-->
+@model IEnumerable<Contestant>
+@{
+    ViewData["Title"] = "Contestants";
+}
+
+@*Used to show temporary data*@
+@if (TempData.Keys.Contains("message"))
+{
+    <h2 class="bg-info-subtle p-2 text-white" style="text-align:center">@TempData["message"]</h2>
+}
+
+<div class="text-center">
+    <h1 class="display-4">List of Contestants</h1>
+    
+    <form asp-action="" method="post">
+
+    <table class="table table-bordered table-striped mt-2">
+        <thead>
+            <tr>
+                <th>Contestants ID</th>
+                <th>Contestants Full Name</th>
+                <th>Contestants Division</th>
+                <th>Contestants School</th>
+                <th>Checked In Status</th>
+                <th></th><!--Details-->
+                <th></th> <!--Edit-->
+                <th></th> <!--Delete-->
+                <!--All other data is shown under contestants details-->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contestant in @Model)
+            {
+                <!--Basic data-->
+                <tr>
+                    <td>@contestant.ContestantID</td>
+                    <td>@contestant.FirstName @contestant.LastName</td>
+                    <td>@contestant.DivisionID</td>
+                    <td>@contestant.SchoolID</td>
+                    <td>@contestant.CheckInStatus</td>
+                    <!--buttons-->
+                    <td>
+                        <a asp-action="ContestantDetails"
+                        asp-route-id="@contestant.ContestantID"
+                        class="btn btn-primary">Details View</a>
+                    </td>
+                    <td>
+                        <a asp-action="Edit"
+                            asp-route-id="@contestant.ContestantID"
+                            class="btn btn-primary">Edit</a>
+                    </td>
+                    <td>
+                        <a asp-action="DeleteContestant"
+                            asp-route-id="@contestant.ContestantID"
+                            class="btn btn-primary">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </form>
+    <form asp-action="" method="post">
+        <a asp-action="Add" class="btn btn-primary mb-3">Add New Contestant</a>
+    </form>
+</div>

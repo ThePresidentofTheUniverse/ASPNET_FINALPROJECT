@@ -1,0 +1,76 @@
+﻿<!--So I can use models-->
+@using FinalProject_ABBOTT.Models;
+@*
+    This page is used for adding and the editing of contestants.
+*@
+<!--For contestant data-->
+@model Contestant
+@{
+    string title = ViewBag.Action + " contestant";
+    ViewData["Title"] = title;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Save" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    
+    <div class="row mb-3">
+        <label asp-for="FirstName" class="form-label">Contestant's First Name</label>
+        <div class="col">
+        <input asp-for="FirstName" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="LastName" class="form-label">Contestant's Last Name</label>
+        <div class="col">
+        <input asp-for="LastName" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="DivisionID" class="form-label">Contestant's Division</label>
+        <div class="col">
+        <select asp-for="DivisionID"
+        asp-items="@(new SelectList(ViewBag.Divisions, "DivisionID", "Name"))" class="form-select">
+        <option value="-1">Select a Division...</option>
+        </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="SchoolID" class="form-label">Contestant's School</label>
+        <div class="col">
+        <select asp-for="SchoolID"
+        asp-items="@(new SelectList(ViewBag.Schools, "SchoolID", "SchoolName"))" class="form-select">
+        <option value="-1">Select an Educational Institute...</option>
+        </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="Email" class="form-label">Contestant's Email</label>
+        <div class="col">
+        <input asp-for="Email" class="form-control" />
+        </div>
+    </div>
+
+    <!--This data should not be modifiable-->
+    <div class="row mb-3">
+        <label asp-for="RegistrationDate" class="form-label">Registration Date</label>
+        <label asp-for="RegistrationDate" class="col-form-label">@ViewBag.Date</label>
+    </div>
+
+    <!--Hidden inputs the user cannot worry about-->
+    <input type="hidden" asp-for="ContestantID" />
+
+
+    <!--Buttons-->
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="ContestantList" class="btn btn-primary">Cancel</a>
+</form>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

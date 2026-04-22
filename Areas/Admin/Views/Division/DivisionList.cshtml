@@ -1,0 +1,72 @@
+﻿<!--So I can use models-->
+@using FinalProject_ABBOTT.Models;
+@*
+    The page for managing all of the contestants.
+*@
+
+<!--for division data-->
+@model IEnumerable<Division>
+@{
+    ViewData["Title"] = "Divisions";
+}
+
+@*Used to show temporary data*@
+@if (TempData.Keys.Contains("message"))
+{
+    <h2 class="bg-info-subtle p-2 text-white" style="text-align:center">@TempData["message"]</h2>
+}
+
+<div class="text-center">
+    <h1 class="display-4">List of Divisions</h1>
+
+    <form asp-action="" method="post">
+        <table class="table table-bordered table-striped mt-2">
+            <thead>
+                <tr>
+                    <th>Division Name</th>
+                    <th>Total Slots</th>
+                    <th>Total Filled Slots</th>
+                    <th>Total Available Slots</th>
+                    <th>Event Time</th>
+                    <th>Coordinator of Division</th>
+                    <th></th> <!--Edit-->
+                    <th></th> <!--Delete-->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var division in @Model)
+                {
+                    <!--The data-->
+                    <tr>
+                        <td>@division.Name</td>
+                        <td>@division.TotalContestantSlots</td>
+                        <td>@division.FilledContestantSlots</td>
+                        <td>@(division.TotalContestantSlots - division.FilledContestantSlots)</td> <!--There is no stored value for this, thus math-->
+                        <td>@division.EventTime</td>
+                        <td>@division.CoordinatorName</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@division.DivisionID"
+                            class="btn btn-primary">Edit</a>
+                        </td>
+                        <td>
+                            @if(division.FilledContestantSlots == 0)
+                            {
+                                <a asp-action="DeleteDivision" asp-route-id="@division.DivisionID"
+                                class="btn btn-primary">Delete</a>
+                            }
+                            else
+                            {
+                                <a asp-action="DeleteDivision" asp-route-id="@division.DivisionID"
+                                   class="btn btn-secondary disabled" aria-disabled="true">Delete</a>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+    <form asp-action="" method="post">
+        <a asp-action="Add" class="btn btn-primary mb-3">Create a new Division</a>
+    </form>
+</div>

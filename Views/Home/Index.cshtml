@@ -1,0 +1,58 @@
+﻿@*
+	PROGRAM TITLE: Final Project for Web programming
+	AUTHOR: Nolan Abbott
+	START DATE: [04/15/2026]
+	END DATE [0/0/2026]
+	DESCRIPTION: [Description Here]
+	USAGE/ISSUES: Not available
+	NOTE: If DB is defaulting to 1000, set the DB size to whatever number is in the DB with this command:
+			DBCC CHECKIDENT ('[tablename]', RESEED, 0);
+			GO
+
+	Side Note: Trying to minimize use of AI for this project the list below shows what I have used it for so far:
+	- The initial seeding of pho-data (not typing all that out myself).
+	- EFCore being a pain in the butt, solution was to uninstall a specific package called "Entity Framework"".
+	- Had to re-do database, attempted to copy what the Sportspro does for integrating foreign keys; did not work.
+	  Upon reviewing the old code I did and the code that I had AI generate, I literally have no clue what the difference is???
+*@
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">We ARE SkillsUSA</h1>
+    <p></p>
+</div>
+
+@*
+	LAST MILESTONE: Basic concept of contestant details created.
+
+	WHAT'S NEXT: Get other pages done
+
+	OVERARCHING GOAL: created the add/edit page and the delete page and fixed DB
+
+	Planned features:
+	- filtering
+	- adding contestant and removing them from the division contestant count.
+
+	KNOWN BUGS:
+	The divisions and schools for contestants show incorrect data.
+	It is possible to sidestep deletion measures for filled divisions by entering the id into the searchbar.
+	Validation for the drop-down lists are not correct, they will allow the default option to be picked.
+	TempData does not work for some reason.
+
+	FEATURES REQUIRED
+	Register contestants (DONE)
+	Manage Contestant information (DONE)
+	Track Check-in status
+	Organize contestants by division / event
+	view summary statistics and reports
+	custom routing or attribute routing
+	mobile-friendly
+	validation
+	tempdata
+	Session State and cookies example
+
+	check optional enhancements if you want to
+*@

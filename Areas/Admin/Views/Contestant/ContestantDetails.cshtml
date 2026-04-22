@@ -1,0 +1,35 @@
+﻿<!--So I can use models-->
+@using FinalProject_ABBOTT.Models;
+@*
+   The contestant details page.
+*@
+<!--for contestant data-->
+@model Contestant
+@{
+    string title = $"{Model.FirstName} {Model.LastName}";
+    ViewData["Title"] = title;
+}
+
+<div>
+    <h1>Contestant Details</h1>
+    <h3>Contestant Name: </h3>
+    <p>@Model.FirstName @Model.LastName</p>
+
+    <h3>Contestant ID: </h3>
+    <p>@Model.ContestantID</p>
+
+    <h3>Contestant Division: </h3>
+    <p>@Model.DivisionID</p>
+
+    <h3>Educational Institute: </h3>
+    <p>@Model.SchoolID</p>
+
+    <h3>Contestant Email: </h3>
+    <p>@Model.Email</p>
+
+    <h3>Checked In Status: </h3>
+    <p>@Model.CheckInStatus</p>
+
+    <h3>Contestant Registration Date: </h3>
+    <p>@Model.RegistrationDate</p>
+</div>

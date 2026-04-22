@@ -1,0 +1,22 @@
+﻿<!--So I can use models-->
+@using FinalProject_ABBOTT.Models;
+@*
+    The page for deleting a contestant
+*@
+<!--for contestant data-->
+@model Contestant
+@{
+    ViewData["Title"] = "Delete Contestant";
+}
+
+<div class="alert-danger mt-4 p-4">
+    <h1>Confirm Deletion</h1>
+    <p>Are you sure you want to delete "@Model.FirstName @Model.LastName"?</p>
+
+    <form asp-action="DeleteContestant" method="post">
+        <input type="hidden" asp-for="ContestantID" />
+
+        <button type="submit" class="btn btn-primary">Delete</button>
+        <a asp-action="ContestantList" class="btn btn-primary">Cancel</a>
+    </form>
+</div>

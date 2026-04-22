@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Admin Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Hello, what would you like to work on today?</h1>
+    <h2 class="display-5">Database Access</h2>
+    <div class="list-group">
+        <a asp-action="ContestantList" asp-controller="Contestant" class="list-group-item">Manage Contestants</a>
+        <a asp-action="DivisionList" asp-controller="Division" class="list-group-item">Manage Divisions</a>
+    </div>
+    <h2 class="display-5">Admin Utilities</h2>
+    <div class="list-group">
+    <a asp-action="SummaryPage" asp-controller="Home" class="list-group-item">Create Summary Page</a>
+    </div>
+</div>
