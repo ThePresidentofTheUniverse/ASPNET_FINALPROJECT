@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FinalProject_ABBOTT.Models;
+using System.Diagnostics;
+using FinalProject_ABBOTT.Migrations;
 
 namespace FinalProject_ABBOTT.Areas.Admin.Controllers
 {
@@ -53,6 +55,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
             ViewBag.Divisions = context.Divisions.OrderBy(d => d.Name).ToList();
             ViewBag.Schools = context.Schools.OrderBy(s => s.SchoolName).ToList();
             var contestant = context.Contestants.Find(id);
+            ViewBag.Date = contestant.RegistrationDate;
             return View("AddEditContestant", contestant);
         }
 
@@ -72,12 +75,12 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
                     contestant.RegistrationDate = DateTime.Now;
 
                     context.Contestants.Add(contestant);
-                    
 
                     tempquery = "added";
                 }
                 else
                 {
+
                     context.Contestants.Update(contestant);
                     tempquery = "modified";
                 }
@@ -88,16 +91,39 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
             }
             else
             {
-                if (contestant.ContestantID == 0)
-                {
-                    ViewBag.Action = "Add";
-                }
-                else
-                {
-                    ViewBag.Action = "Edit";
-                }
-                return View(contestant);
+                ViewBag.Action = contestant.ContestantID == 0 ? "Add" : "Edit";
+
+                ViewBag.Divisions = context.Divisions
+                    .OrderBy(d => d.Name)
+                    .ToList();
+
+                ViewBag.Schools = context.Schools
+                    .OrderBy(s => s.SchoolName)
+                    .ToList();
+
+                return View("AddEditContestant", contestant);
             }
+        }
+
+        //AREA OF CODE FOR CHECKING IN AND OUT CONTESTANTS
+
+        //The method used to update the status of the contestant
+        public IActionResult CheckContestant(Contestant contestant)
+        {
+
+            //Need to figure out how to pass in the data.
+            if (contestant.CheckInStatus!)
+            {
+                contestant.CheckInStatus = true;
+            }
+            else
+            {
+                contestant.CheckInStatus = false;
+            }
+            Debug.WriteLine(contestant.ContestantID + " " + contestant.FirstName + " " + contestant.LastName + " " + contestant.Email + " " + contestant.SchoolID + " " + contestant.School + " " + contestant.DivisionID + " " + contestant.Division + " " + contestant.CheckInStatus + " " + contestant.RegistrationDate);
+            context.Contestants.Update(contestant);
+            context.SaveChanges();
+            return RedirectToAction("ContestantList");
         }
 
         //AREA OF CODE FOR DELETING CONTESTANTS

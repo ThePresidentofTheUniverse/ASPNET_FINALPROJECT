@@ -43,8 +43,21 @@
                     <td>@contestant.FirstName @contestant.LastName</td>
                     <td>@contestant.DivisionID</td>
                     <td>@contestant.SchoolID</td>
-                    <td>@contestant.CheckInStatus</td>
                     <!--buttons-->
+                    <td>
+                            <!--Alternate buttons for prettiness-->
+                            @if (contestant.CheckInStatus)
+                            {
+                                <a asp-action="CheckContestant"
+                                   class="btn btn-primary mb-3">Checked In</a>
+                            }
+                            else
+                            {
+                                <a asp-action="CheckContestant"
+                                   asp-route-id="@contestant.ContestantID"
+                                   class="btn btn-outline-primary mb-3">Checked Out</a>
+                            }
+                    </td>
                     <td>
                         <a asp-action="ContestantDetails"
                         asp-route-id="@contestant.ContestantID"
@@ -58,7 +71,7 @@
                     <td>
                         <a asp-action="DeleteContestant"
                             asp-route-id="@contestant.ContestantID"
-                            class="btn btn-primary">Delete</a>
+                            class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             }

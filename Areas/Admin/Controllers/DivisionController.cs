@@ -1,6 +1,5 @@
 ﻿using FinalProject_ABBOTT.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient.DataClassification;
 
 namespace FinalProject_ABBOTT.Areas.Admin.Controllers
 {
@@ -17,7 +16,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
             return View(divisions);
         }
 
-        //AREA OF CODING FOR ADDING AND EDITING CONTESTANTS
+        //AREA OF CODING FOR ADDING AND EDITING DIVISIONS
 
         //sets up page to create a new division
         [HttpGet]
@@ -73,7 +72,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
                 {
                     ViewBag.Action = "Edit";
                 }
-                return View(division);
+                return View("AddEditDivision", division);
             }
         }
 

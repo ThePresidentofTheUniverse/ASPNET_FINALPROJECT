@@ -4,7 +4,7 @@
     This page is used for adding and the editing of contestants.
 *@
 <!--For contestant data-->
-@model Contestant
+@model Contestant;
 @{
     string title = ViewBag.Action + " contestant";
     ViewData["Title"] = title;
@@ -34,7 +34,6 @@
         <div class="col">
         <select asp-for="DivisionID"
         asp-items="@(new SelectList(ViewBag.Divisions, "DivisionID", "Name"))" class="form-select">
-        <option value="-1">Select a Division...</option>
         </select>
         </div>
     </div>
@@ -44,7 +43,6 @@
         <div class="col">
         <select asp-for="SchoolID"
         asp-items="@(new SelectList(ViewBag.Schools, "SchoolID", "SchoolName"))" class="form-select">
-        <option value="-1">Select an Educational Institute...</option>
         </select>
         </div>
     </div>
@@ -64,7 +62,7 @@
 
     <!--Hidden inputs the user cannot worry about-->
     <input type="hidden" asp-for="ContestantID" />
-
+    <input type="hidden" asp-for="RegistrationDate" />
 
     <!--Buttons-->
     <button type="submit" class="btn btn-primary">Save</button>

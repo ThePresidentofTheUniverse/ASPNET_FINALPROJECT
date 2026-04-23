@@ -1,6 +1,10 @@
-﻿@*
+﻿<!--So I can used models-->
+@using FinalProject_ABBOTT.Models;
+@*
     A summary page that allows admins to see statistics
 *@
+<!--For contestant data.-->
+@model IEnumerable<Contestant>
 
 @{
     ViewData["Title"] = "Summary Page";
@@ -10,10 +14,12 @@
     <h1 class="display-4">Summary Page of SkillsUSA Nebraska @DateTime.Now.Year</h1>
 
     <h2>Total contestants:</h2>
+    <p>@Model.Count()</p>
     <h2>Amount of contestants checked in:</h2>
+    
     <h2>Amount of contestants not checked in:</h2>
-    <h1>[Contestants Group By Divisions]</h1>
+    <h2>[Contestants Group By Divisions]</h2>
 
-    <h1>[List of non-checked in contestants]</h1>
+    <h2>[List of non-checked in contestants]</h2>
 
 </div>
