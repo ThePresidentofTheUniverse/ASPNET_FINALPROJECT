@@ -12,9 +12,34 @@
 @*Used to show temporary data*@
 @if (TempData.Keys.Contains("message"))
 {
-    <h2 class="bg-info-subtle p-2 text-white" style="text-align:center">@TempData["message"]</h2>
+    <h2 class="bg-info p-2 text-white" style="text-align:center">@TempData["message"]</h2>
 }
 
+<!--Filters regarding contestants-->
+<div class="row">
+    <div class="col-md-2">
+        <form asp-action="Filter" method="post">
+            <div class="mb-3">
+                <label class="form-label">Division:</label>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">School:</label>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Checked Status:</label>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Order-By:</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Set Filters</button>
+            <a asp-action="ContestantList" asp-route-id="" class="btn btn-danger">Clear Filters</a>
+        </form>
+    </div>
+</div>
+
+
+<!--Information table regarding contestants-->
 <div class="text-center">
     <h1 class="display-4">List of Contestants</h1>
     
@@ -49,6 +74,7 @@
                             @if (contestant.CheckInStatus)
                             {
                                 <a asp-action="CheckContestant"
+                                asp-route-id="@contestant.ContestantID"
                                    class="btn btn-primary mb-3">Checked In</a>
                             }
                             else

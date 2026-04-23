@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;  // for ValidateNever
 
 //The class that defines a contestant
 namespace FinalProject_ABBOTT.Models
@@ -18,6 +19,7 @@ namespace FinalProject_ABBOTT.Models
 
         [Required(ErrorMessage = "Please enter the contestant's school")]
         public int SchoolID { get; set; }
+        [ValidateNever]
         public School School { get; set; } = null!;
 
         [Required(ErrorMessage = "Please enter the contestant's primary email address.")]
@@ -26,6 +28,7 @@ namespace FinalProject_ABBOTT.Models
 
         [Required(ErrorMessage = "Please select a valid Division for the contestant to compete in.")]
         public int DivisionID { get; set; }
+        [ValidateNever]
         public Division Division { get; set; } = null!;
 
         //The bottom two will default to a specific property, thus nothing will be technically validated.

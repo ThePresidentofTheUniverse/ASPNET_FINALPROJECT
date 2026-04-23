@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using FinalProject_ABBOTT.Models;
 using System.Diagnostics;
-using FinalProject_ABBOTT.Migrations;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinalProject_ABBOTT.Areas.Admin.Controllers
 {
@@ -21,6 +20,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
         {
             //Get the contestants from the database (VERY BASIC PLAN ON DOING MORE IF POSSIBLE).
             var contestants = context.Contestants.OrderBy(c => c.ContestantID).ToList();
+
             return View(contestants);
         }
 
@@ -101,6 +101,8 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
                     .OrderBy(s => s.SchoolName)
                     .ToList();
 
+                ViewBag.Date = contestant.RegistrationDate;
+
                 return View("AddEditContestant", contestant);
             }
         }
@@ -108,11 +110,12 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
         //AREA OF CODE FOR CHECKING IN AND OUT CONTESTANTS
 
         //The method used to update the status of the contestant
-        public IActionResult CheckContestant(Contestant contestant)
+        public IActionResult CheckContestant(int id)
         {
+            var contestant = context.Contestants.Find(id);
 
             //Need to figure out how to pass in the data.
-            if (contestant.CheckInStatus!)
+            if (contestant.CheckInStatus != true)
             {
                 contestant.CheckInStatus = true;
             }

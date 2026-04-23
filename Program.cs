@@ -4,9 +4,14 @@ using FinalProject_ABBOTT.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.Services.AddRouting( options =>
+{
+    options.LowercaseUrls = true;
+    options.AppendTrailingSlash = true;
+}
+);
 
-//For cookies
+//Needs to be called before adding controllers with views.
 builder.Services.AddMemoryCache();
 builder.Services.AddSession();
 
@@ -30,6 +35,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+//For cookies
+app.UseSession();
 
 app.UseAuthorization();
 

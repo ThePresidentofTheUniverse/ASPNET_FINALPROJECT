@@ -34,6 +34,7 @@
         <div class="col">
         <select asp-for="DivisionID"
         asp-items="@(new SelectList(ViewBag.Divisions, "DivisionID", "Name"))" class="form-select">
+        <option value="-1">Select a Division...</option>
         </select>
         </div>
     </div>
@@ -43,6 +44,7 @@
         <div class="col">
         <select asp-for="SchoolID"
         asp-items="@(new SelectList(ViewBag.Schools, "SchoolID", "SchoolName"))" class="form-select">
+        <option value="-1">Select a School...</option>
         </select>
         </div>
     </div>
