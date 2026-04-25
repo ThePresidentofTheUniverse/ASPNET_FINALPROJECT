@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;  // for ValidateNever
 
 //The class that defines a contestant
@@ -7,6 +8,7 @@ namespace FinalProject_ABBOTT.Models
     public class Contestant
     {
         //The PK
+        [Key]
         public int ContestantID { get; set; }
 
         [Required (ErrorMessage = "Please enter the contestant's first name.")]
@@ -20,7 +22,9 @@ namespace FinalProject_ABBOTT.Models
         [Required(ErrorMessage = "Please enter the contestant's school")]
         public int SchoolID { get; set; }
         [ValidateNever]
-        public School School { get; set; } = null!;
+        [ForeignKey(nameof(SchoolID))] //Had to add the foreign keys for filtering
+        [InverseProperty("Contestants")] 
+        public virtual School School { get; set; } = null!;
 
         [Required(ErrorMessage = "Please enter the contestant's primary email address.")]
         [StringLength(200, ErrorMessage = "The contestant's email cannot be longer than 200 characters.")]
@@ -29,6 +33,8 @@ namespace FinalProject_ABBOTT.Models
         [Required(ErrorMessage = "Please select a valid Division for the contestant to compete in.")]
         public int DivisionID { get; set; }
         [ValidateNever]
+        [ForeignKey(nameof(DivisionID))] //Had to add the foreign keys for filtering
+        [InverseProperty("Contestants")]
         public Division Division { get; set; } = null!;
 
         //The bottom two will default to a specific property, thus nothing will be technically validated.

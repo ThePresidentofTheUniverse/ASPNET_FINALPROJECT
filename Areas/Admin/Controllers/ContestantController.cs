@@ -16,12 +16,51 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
         //AREA OF CODE FOR GRABBING INFORMATIONS
 
         //[Route("[controllers]s")] //Note to self: This did not work due to the admins stuff inprogram.cs
-        public IActionResult ContestantList()
+        public IActionResult ContestantList(string filter)
         {
-            //Get the contestants from the database (VERY BASIC PLAN ON DOING MORE IF POSSIBLE).
-            var contestants = context.Contestants.OrderBy(c => c.ContestantID).ToList();
+            Debug.WriteLine(filter);
+            ContestantsViewModel model = new ContestantsViewModel()
+            {
+                Contestants = context.Contestants.ToList(),
+                Divisions = context.Divisions.ToList(),
+                Schools = context.Schools.ToList(),
+                CheckedFilters = Filters.CheckedFilterValues,
+                Filters = new Filters(filter)
+            };
 
-            return View(contestants);
+            
+
+            //Get the list of contestants from the database based on the applied filters
+           IQueryable<Contestant> query = context.Contestants
+                .Include(c => c.Division).Include(c => c.School);
+
+
+            //Check in / check out filter does not work for some reason.
+            if (model.Filters.HasDivisionID)
+            {
+                query = query.Where(c => c.DivisionID == model.Filters.DivisionID);
+            }
+            if (model.Filters.HasSchoolID)
+            {
+                query = query.Where(c => c.SchoolID == model.Filters.SchoolID);
+            }
+            if (model.Filters.HasCheckedStatus)
+            {
+                if (model.Filters.IsTrue)
+                {
+                    query = query.Where(c => c.CheckInStatus == true);
+                }
+                else if (model.Filters.IsFalse)
+                {
+                    query = query.Where(c => c.CheckInStatus == false);
+                }
+            }
+
+            //Throws topgether all of the filters at the very end.
+            var contestants = query.OrderBy(c => c.ContestantID).ToList();
+            model.Contestants = contestants;
+
+            return View(model);
         }
 
         //Stuff that grabs the details
@@ -32,6 +71,15 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
             ViewBag.Schools = context.Schools.OrderBy(s => s.SchoolName).ToList();
             var contestant = context.Contestants.Find(id);
             return View(contestant);
+        }
+
+        //AREA OF CODE FOR USING FILTERS
+        //Works with applying the filters
+        [HttpPost]
+        public IActionResult Filter(string[] filter)
+        {
+            string id = string.Join('|', filter);
+            return RedirectToAction("ContestantList", new {filter = id});
         }
 
         // AREA OF CODE FOR ADDING AND EDITING CONTESTANTS
@@ -128,6 +176,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
             context.SaveChanges();
             return RedirectToAction("ContestantList");
         }
+
 
         //AREA OF CODE FOR DELETING CONTESTANTS
 

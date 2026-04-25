@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinalProject_ABBOTT.Models
 {
-    public class ContestantsContext : DbContext
+    public class ContestantsContext : IdentityDbContext<User>
     {
         public ContestantsContext(DbContextOptions<ContestantsContext> options)
         : base(options)
@@ -14,6 +15,8 @@ namespace FinalProject_ABBOTT.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             //Config entities
             modelBuilder.ApplyConfiguration(new ConfigureSchools());
             modelBuilder.ApplyConfiguration(new ConfigureDivisions());

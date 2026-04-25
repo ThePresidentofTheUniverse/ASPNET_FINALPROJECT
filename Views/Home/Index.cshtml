@@ -14,6 +14,9 @@
 	- EFCore being a pain in the butt, solution was to uninstall a specific package called "Entity Framework"".
 	- Had to re-do database, attempted to copy what the Sportspro does for integrating foreign keys; did not work.
 	  Upon reviewing the old code I did and the code that I had AI generate, I literally have no clue what the difference is???
+	- Used it for trouble shooting the filters. It turns out the problem was related to how I was passing the default options.
+	  UPDATE TO ABOVE ONE: That was not the issue and AI was leading me in circles; the real issue was that I had mispelled a name :(
+						   This took two days of work, but allowed me to create better classes.
 *@
 
 @{
@@ -26,32 +29,29 @@
 </div>
 
 @*
-	LAST MILESTONE: Made the check in and check out function work.
+	LAST MILESTONE: Made the filter system work mostly, just checkout and checkin is not working.
 
-	WHAT'S NEXT: Create Filtering now for contestants and possibly divisions. Do it through aside.
+	WHAT'S NEXT: Make users actually log in now, reference chapter 16 stuff, starting at the main layout.
 
 	OVERARCHING GOAL: Work on advanced functionalities now, like filtering, summary pages and checking in.
 
 	Planned features:
-	- filtering
 	- adding contestant and removing them from the division contestant count.
 
 	KNOWN BUGS:
-	The divisions and schools for contestants show incorrect data on table. (LINQ QUERIES CAN NOT FIX THIS nor can foreign keys???)
 	It is possible to sidestep deletion measures for filled divisions by entering the id into the searchbar.
-	Validation for the drop-down lists are not correct, they will allow the default option to be picked.
-	TempData does not work for some reason.
+	Data for ContestantID (and other IDs probably) does not fix itself based how many contestants there actually are.
 
 	FEATURES REQUIRED
 	Register contestants (DONE)
 	Manage Contestant information (DONE)
 	Track Check-in status (DONE)
-	Organize contestants by division / event
+	Organize contestants by division / event (DONE)
 	view summary statistics and reports
 	custom routing or attribute routing
 	mobile-friendly
 	validation
-	tempdata
+	tempdata (DONE)
 	Session State and cookies example
 
 	check optional enhancements if you want to

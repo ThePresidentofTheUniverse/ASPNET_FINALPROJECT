@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using FinalProject_ABBOTT.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ContestantsContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("ContestantsContext")));
 
+//Services used for Identity
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireDigit = true;
+}).AddEntityFrameworkStores<ContestantsContext>()
+    .AddDefaultTokenProviders();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,7 +49,15 @@ app.UseRouting();
 //For cookies
 app.UseSession();
 
+//For authentication and authorization of users
+app.UseAuthentication();
 app.UseAuthorization();
+
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+using (var scope = scopeFactory.CreateScope())
+{
+    await ConfigureIdentity.CreateAdminUserAsync(scope.ServiceProvider);
+}
 
 //Maps the Admin area controller
 app.MapAreaControllerRoute(

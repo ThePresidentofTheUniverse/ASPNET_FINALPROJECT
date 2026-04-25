@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinalProject_ABBOTT.Models
 {
@@ -6,6 +7,7 @@ namespace FinalProject_ABBOTT.Models
     public class Division
     {
         //The PK
+        [Key]
         public int DivisionID { get; set; }
 
         [Required (ErrorMessage = "The Division requires a name.")]
@@ -25,5 +27,8 @@ namespace FinalProject_ABBOTT.Models
         [Required (ErrorMessage = "The designated coordinator is required for this division.")]
         [StringLength(200, ErrorMessage = "The coordinator's name must be less than 200 characters.")]
         public string CoordinatorName { get; set; } = string.Empty; //Who is running the event
+
+        [InverseProperty(nameof(Contestant.Division))] //Added this for filtering.
+        public virtual ICollection<Contestant> Contestants { get; set; }
     }
 }

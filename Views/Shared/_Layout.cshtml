@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using FinalProject_ABBOTT.Models;
+
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -19,12 +21,24 @@
                         asp-action="Index" asp-controller="Home"
                         >Home Page</a>
                    </li>
-                   <li class="nav-item">
-                        <a class="nav-link"
-                        asp-action="Index" asp-controller="Home" asp-area="Admin"
-                        >Register/Login</a>
-                   </li>
                </ul>
+           </div>
+           <div class="navbar-nav ms-auto">
+               <!--Login and Logout suff-->
+               <div>
+                   @using Microsoft.AspNetCore.Identity
+                   @inject SignInManager<User> signInManager
+                   
+                    <!--anonymous user-->
+                    <div class="nav-item">
+                        <a class="nav-link" asp-action="Register" asp-controller="Account" asp-area="">
+                            <span class="fas fa-edit"></span>&nbsp;Register
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link" asp-action="Login" asp-controller="Account" asp-area="">Log In</a>
+                    </div>
+               </div>
            </div>
     </nav>
     <header>
