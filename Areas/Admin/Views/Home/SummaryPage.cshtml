@@ -4,8 +4,7 @@
     A summary page that allows admins to see statistics
 *@
 <!--For contestant data.-->
-@model IEnumerable<Contestant>
-
+@model ContestantsViewModel
 @{
     ViewData["Title"] = "Summary Page";
 }
@@ -14,12 +13,33 @@
     <h1 class="display-4">Summary Page of SkillsUSA Nebraska @DateTime.Now.Year</h1>
 
     <h2>Total contestants:</h2>
-    <p>@Model.Count()</p>
+    <p>@ViewBag.ContestantsAMT</p>
     <h2>Amount of contestants checked in:</h2>
-    
+    <p>@ViewBag.CheckedIn</p>
     <h2>Amount of contestants not checked in:</h2>
+    <p>@ViewBag.CheckedOutAMT</p>
     <h2>[Contestants Group By Divisions]</h2>
 
-    <h2>[List of non-checked in contestants]</h2>
-
+    <h2>List of non-checked in contestants</h2>
+    <table class="table table-bordered table-striped mt-2">
+        <thead>
+            <tr>
+                <th>Contestants ID</th>
+                <th>Contestants First Name</th>
+                <th>Contestants Last Name</th>
+                <th>Contestants School</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Contestant contestant in ViewBag.CheckedOutContestants)
+            {
+                <tr>
+                    <td>@contestant.ContestantID</td>
+                    <td>@contestant.FirstName</td>
+                    <td>@contestant.LastName</td>
+                    <td>@contestant.School.SchoolName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

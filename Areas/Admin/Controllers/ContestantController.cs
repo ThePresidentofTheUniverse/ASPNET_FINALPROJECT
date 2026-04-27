@@ -2,10 +2,12 @@
 using FinalProject_ABBOTT.Models;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization; //to authorize
 
 namespace FinalProject_ABBOTT.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class ContestantController : Controller
     {
         //AREA WHERE DATABASE CONTEXT IS CREATED
@@ -18,7 +20,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
         //[Route("[controllers]s")] //Note to self: This did not work due to the admins stuff inprogram.cs
         public IActionResult ContestantList(string filter)
         {
-            Debug.WriteLine(filter);
+            //Grabs the information from the database
             ContestantsViewModel model = new ContestantsViewModel()
             {
                 Contestants = context.Contestants.ToList(),
@@ -56,7 +58,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
                 }
             }
 
-            //Throws topgether all of the filters at the very end.
+            //Throws together all of the filters at the very end.
             var contestants = query.OrderBy(c => c.ContestantID).ToList();
             model.Contestants = contestants;
 

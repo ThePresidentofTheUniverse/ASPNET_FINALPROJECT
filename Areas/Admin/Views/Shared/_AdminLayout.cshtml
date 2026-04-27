@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using FinalProject_ABBOTT.Models;
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -30,12 +31,23 @@
                         <a class="nav-link"
                         asp-action="SummaryPage" asp-controller="Home" asp-area="Admin">Summary Page</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           asp-action="Index" asp-controller="Home" asp-area="">Logout</a>
-                    </li>
                 </ul>
             </div>
+            <div class="navbar-nav ms-auto">
+               <!--Login and Logout suff-->
+               <div>
+                   @using Microsoft.AspNetCore.Identity
+                   @inject SignInManager<User> signInManager
+                   
+                    <div class="nav-item">
+                        <form method="post" asp-action="LogOut" asp-controller="Account" asp-area="">
+                           <input type="submit" value="Log Out" class="btn btn-outline-primary" />
+                           <span class="text-dark">Current User: @User.Identity?.Name</span>
+                        </form>
+                    </div>
+
+               </div>
+           </div>
         </nav>
         <main>
             @RenderBody()

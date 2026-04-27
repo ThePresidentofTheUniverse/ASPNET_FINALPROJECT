@@ -1,9 +1,11 @@
 ﻿using FinalProject_ABBOTT.Models;
+using Microsoft.AspNetCore.Authorization; //to authorize
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinalProject_ABBOTT.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class DivisionController : Controller
     {
         //AREA WHERE DATABASE CONTEXT IS CREATED

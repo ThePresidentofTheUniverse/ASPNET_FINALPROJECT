@@ -32,7 +32,7 @@ namespace FinalProject_ABBOTT.Controllers
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home", new {area = "Admin"}); //This might not work
+                    return RedirectToAction("Index", "Home"); //This might not work
                 }
                 else
                 {
