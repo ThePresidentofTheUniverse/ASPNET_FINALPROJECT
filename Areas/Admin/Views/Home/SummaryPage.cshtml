@@ -19,6 +19,17 @@
     <h2>Amount of contestants not checked in:</h2>
     <p>@ViewBag.CheckedOutAMT</p>
     <h2>[Contestants Group By Divisions]</h2>
+    @foreach(Division division in ViewBag.Divisions)
+    {
+        <h3>@division.Name</h3>
+        @foreach(Contestant contestant in ViewBag.Contestants)
+        {
+            if(contestant.DivisionID == division.DivisionID)
+            {
+                <p>@contestant.FirstName @contestant.LastName</p>
+            }   
+        }
+    }
 
     <h2>List of non-checked in contestants</h2>
     <table class="table table-bordered table-striped mt-2">

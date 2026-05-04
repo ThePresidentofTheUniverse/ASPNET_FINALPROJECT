@@ -59,6 +59,8 @@ using (var scope = scopeFactory.CreateScope())
     await ConfigureIdentity.CreateAdminUserAsync(scope.ServiceProvider);
 }
 
+app.MapControllers();
+
 //Maps the Admin area controller
 app.MapAreaControllerRoute(
     name: "admin",

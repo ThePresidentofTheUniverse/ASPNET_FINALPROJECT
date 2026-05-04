@@ -14,12 +14,14 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
 
 
         //AREA FOR BOOTING UP THE INDEX PAGE
+        [Route("administrator-home")]
         public IActionResult Index()
         {
             return View();
         }
 
         //AREA FOR BOOTING UP THE SUMMARY PAGE
+        [Route("summary-page")]
         public IActionResult SummaryPage()
         {
             //Grabs the information from the database
@@ -61,13 +63,8 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
             List<Contestant> contestants = model.Contestants.ToList();
             List<Division> divisions = model.Divisions.ToList();
 
-            foreach (Division division in model.Divisions)
-            {
-
-            }
-            
-            //TODO: SORT THE CONTESTANTS BY DIVISIONS; DO MULTIPLE TABLES MAYBE?
-
+            ViewBag.Divisions = divisions;
+            ViewBag.Contestants = contestants;
 
             return View(model);
         }

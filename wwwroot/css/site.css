@@ -1,3 +1,5 @@
+/* HTML STYLE RULES */
+
 html {
   font-size: 14px;
 }
@@ -17,11 +19,56 @@ html {
   min-height: 100%;
 }
 
+/* BODY STYLE RULES */
+
 body {
   margin-bottom: 60px;
 }
 
+/* MAIN STYLE RULES */
+
 main {
     padding-right: 15em;
     padding-left: 15em;
+}
+
+/* MEDIA QUERY */
+
+/* 1024px tablet (horizontal) */
+@media only screen and (max-width: 1024px){
+    body{
+        height: auto;
+    }
+    
+}
+
+/* 770px phone (vertical) */
+@media only screen and (max-width: 770px){
+    body{
+        margin-left: 0;
+        margin-right: 0;
+        text-align: center;
+        font-size: small;
+    }
+    /* disable the default filters */
+    #filters{
+
+    }
+
+    /* destroy padding */
+    main {
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+
+
+    /* recenter contestant table */
+    #contestantTable{
+        margin-left: -10em;
+    }
+
+
+    /* recenter division table */
+
+    
 }

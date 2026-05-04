@@ -12,6 +12,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
         private ContestantsContext context;
         public DivisionController(ContestantsContext ctx) => context = ctx;
 
+        [Route("divisions")]
         public IActionResult DivisionList()
         {
             var divisions = context.Divisions.OrderBy(d => d.DivisionID).ToList();
@@ -22,6 +23,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
 
         //sets up page to create a new division
         [HttpGet]
+        [Route("add-division")]
         public IActionResult Add()
         {
             ViewBag.Action = "Add";
@@ -30,6 +32,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
 
         //sets up page to edit a existing division
         [HttpGet]
+        [Route("edit-division/{id}")]
         public IActionResult Edit(int id)
         {
             ViewBag.Action = "Edit";
@@ -82,6 +85,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
 
         //sets up information for deleting a division.
         [HttpGet]
+        [Route("delete-division")]
         public IActionResult DeleteDivision(int id)
         {
             var division = context.Divisions.Find(id);

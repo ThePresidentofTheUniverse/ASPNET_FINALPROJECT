@@ -22,7 +22,8 @@ namespace FinalProject_ABBOTT.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        [Route("Register")]
+        public async Task<IActionResult> RegisterUser(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -60,6 +61,7 @@ namespace FinalProject_ABBOTT.Controllers
         }
 
         [HttpPost]
+        [Route("admin-login")]
         public async Task<IActionResult> LogIn(LoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -84,6 +86,7 @@ namespace FinalProject_ABBOTT.Controllers
             return View(model);
         }
 
+        [Route("AccessDenied")]
         public ViewResult AccessDenied()
         {
             return View();

@@ -18,8 +18,11 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
         //AREA OF CODE FOR GRABBING INFORMATIONS
 
         //[Route("[controllers]s")] //Note to self: This did not work due to the admins stuff inprogram.cs
+        [Route("contestants")]
         public IActionResult ContestantList(string filter)
         {
+            string sessionFilters = HttpContext.Session.GetString("filters");
+
             //Grabs the information from the database
             ContestantsViewModel model = new ContestantsViewModel()
             {
@@ -30,12 +33,14 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
                 Filters = new Filters(filter)
             };
 
-            
+            if (filter != null)
+            {
+                HttpContext.Session.SetString("filters", filter);
+            }
 
             //Get the list of contestants from the database based on the applied filters
-           IQueryable<Contestant> query = context.Contestants
+            IQueryable<Contestant> query = context.Contestants
                 .Include(c => c.Division).Include(c => c.School);
-
 
             //Check in / check out filter does not work for some reason.
             if (model.Filters.HasDivisionID)
@@ -67,6 +72,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
 
         //Stuff that grabs the details
         [HttpGet]
+        [Route("contestant-details/{id}")]
         public IActionResult ContestantDetails(int id)
         {
             ViewBag.Divisions = context.Divisions.OrderBy(d => d.Name).ToList();
@@ -88,6 +94,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
 
         //sets page up to create a new contestant
         [HttpGet]
+        [Route("add-contestant")]
         public IActionResult Add()
         {
             ViewBag.Action = "Add";
@@ -99,6 +106,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
 
         //sets page up to modify an existing contestant
         [HttpGet]
+        [Route("edit-contestant/{id}")]
         public IActionResult Edit(int id)
         {
             ViewBag.Action = "Edit";
@@ -113,48 +121,61 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Save(Contestant contestant)
         {
-            if (ModelState.IsValid)
-            {
-                string tempquery = string.Empty; //used to show temporary data
 
-                if (contestant.ContestantID == 0)
+                if (TempData["okEmail"] == null)
                 {
-                    //Makes sure that the status is false.
-                    contestant.CheckInStatus = false;
-                    //Creates the initial registration date of the contestant
-                    contestant.RegistrationDate = DateTime.Now;
+                    string msg = Check.EmailExists(context, contestant.Email);
+                    if (!string.IsNullOrEmpty(msg))
+                    {
+                        ModelState.AddModelError(nameof(Contestant.Email), msg);
+                    }
+                }           
+                if (ModelState.IsValid)
+                {
 
-                    context.Contestants.Add(contestant);
+                        string tempquery = string.Empty; //used to show temporary data
 
-                    tempquery = "added";
+                        if (contestant.ContestantID == 0)
+                        {
+                            //Makes sure that the status is false.
+                            contestant.CheckInStatus = false;
+                            //Creates the initial registration date of the contestant
+                            contestant.RegistrationDate = DateTime.Now;
+
+                            context.Contestants.Add(contestant);
+
+                            tempquery = "added";
+                        }
+                        else
+                        {
+
+                            context.Contestants.Update(contestant);
+                            tempquery = "modified";
+                        }
+                        context.SaveChanges();
+
+                        TempData["message"] = $"The contestant \"{contestant.FirstName} {contestant.LastName}\" has been {tempquery}."; //creates the temporary data to show what occurred.
+                        return RedirectToAction("ContestantList");
+
+                    
                 }
                 else
                 {
+                    ViewBag.Action = contestant.ContestantID == 0 ? "Add" : "Edit";
 
-                    context.Contestants.Update(contestant);
-                    tempquery = "modified";
+                    ViewBag.Divisions = context.Divisions
+                        .OrderBy(d => d.Name)
+                        .ToList();
+
+                    ViewBag.Schools = context.Schools
+                        .OrderBy(s => s.SchoolName)
+                        .ToList();
+
+                    ViewBag.Date = contestant.RegistrationDate;
+
+                    return View("AddEditContestant", contestant);
                 }
-                context.SaveChanges();
 
-                TempData["message"] = $"The contestant \"{contestant.FirstName} {contestant.LastName}\" has been {tempquery}."; //creates the temporary data to show what occurred.
-                return RedirectToAction("ContestantList");
-            }
-            else
-            {
-                ViewBag.Action = contestant.ContestantID == 0 ? "Add" : "Edit";
-
-                ViewBag.Divisions = context.Divisions
-                    .OrderBy(d => d.Name)
-                    .ToList();
-
-                ViewBag.Schools = context.Schools
-                    .OrderBy(s => s.SchoolName)
-                    .ToList();
-
-                ViewBag.Date = contestant.RegistrationDate;
-
-                return View("AddEditContestant", contestant);
-            }
         }
 
         //AREA OF CODE FOR CHECKING IN AND OUT CONTESTANTS
@@ -184,6 +205,7 @@ namespace FinalProject_ABBOTT.Areas.Admin.Controllers
 
         //Sets up information for deleting a contestant.
         [HttpGet]
+        [Route("Delete-Contestant/{id}")]
         public IActionResult DeleteContestant(int id)
         {
             var contestant =context.Contestants.Find(id);

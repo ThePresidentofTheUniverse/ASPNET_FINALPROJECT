@@ -23,23 +23,23 @@
                    </li>
                </ul>
            </div>
-           <div class="navbar-nav ms-auto">
+           <div>
                <!--Login and Logout suff-->
-               <div>
                    @using Microsoft.AspNetCore.Identity
                    @inject SignInManager<User> signInManager
                    
                     <!--anonymous user-->
-                    <div class="nav-item">
-                        <a class="nav-link" asp-action="Register" asp-controller="Account" asp-area="">
+                    <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <!--Removed the register page, partially because it is not realistic for this type of program, and is also possibly non functional due to it being unable to transition to Admin Area-->
+@*                         <a class="nav-link" asp-action="Register" asp-controller="Account" asp-area="">
                             <span class="fas fa-edit"></span>&nbsp;Register
-                        </a>
-                    </div>
-                    
-                    <div class="nav-item">
+                        </a> *@
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" asp-action="Index" asp-controller="Home" asp-area="Admin">Log In</a>
-                    </div>
-               </div>
+                    </li>
+                    </ul>
            </div>
     </nav>
     <header>

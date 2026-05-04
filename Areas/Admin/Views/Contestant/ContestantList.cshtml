@@ -16,9 +16,9 @@
 }
 
 <!--Filters regarding contestants-->
-<aside>
+<h1 class="display-4 text-center">List of Contestants</h1>
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-2" id="filters">
             <form asp-action="Filter" method="post">
                 <div class="mb-3">
                     <label class="form-label">Division:</label>
@@ -44,18 +44,17 @@
                 <button type="submit" class="btn btn-primary">Set Filters</button>
                 <a asp-action="ContestantList" asp-route-filter="" class="btn btn-danger">Clear Filters</a>
             </form>
+        <form asp-action="" method="post" style="padding-top: 1em">
+            <a asp-action="Add" class="btn btn-primary mb-3">Add New Contestant</a>
+        </form>
     </div>
-</div>
-</aside>
 
 
 <!--Information table regarding contestants-->
-<div class="text-center">
-    <h1 class="display-4">List of Contestants</h1>
-    
+<div class="col-md-10 text-center">
     <form asp-action="" method="post">
 
-    <table class="table table-bordered table-striped mt-2">
+    <table class="table table-bordered table-striped mt-2" id="contestantTable">
         <thead>
             <tr>
                 <th>Contestants ID</th>
@@ -114,7 +113,5 @@
         </tbody>
     </table>
     </form>
-    <form asp-action="" method="post">
-        <a asp-action="Add" class="btn btn-primary mb-3">Add New Contestant</a>
-    </form>
+</div>
 </div>
